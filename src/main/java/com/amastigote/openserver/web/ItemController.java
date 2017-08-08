@@ -50,12 +50,12 @@ public class ItemController {
         try {
             Item item = itemService.findItemByURL(itemRequestBody.getUrl());
             if (item == null)
-                response.setStat(Response.Status.ERROR); // item not found
+                response.setStat(Response.Status.ERROR);
             else {
                 itemService.saveWithTagMetas(
                         item.setTitle(itemRequestBody.getTitle()).setUrl(item.getUrl()),
                         itemRequestBody.getTags());
-                response.setStat(Response.Status.COMPLETE); // item updated
+                response.setStat(Response.Status.COMPLETE);
             }
         } catch (Exception ignored) {
             response.setStat(Response.Status.EXCEPTION);
