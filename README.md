@@ -11,3 +11,34 @@ A fully deployable server for amastigote open version.
 ```
 ➜ java -jar ama-openserver.jar
 ```
+## Source Structure
+```
+.
+├── Application.java
+├── conf
+│   ├── DataSourceConfiguration.java
+│   └── JpaConfiguration.java
+├── data
+│   ├── model
+│   │   ├── local
+│   │   │   ├── Item.java
+│   │   │   └── Tag.java
+│   │   └── remote
+│   │       ├── ItemPageObj.java
+│   │       ├── ItemRequestBody.java
+│   │       └── Response.java
+│   ├── repository
+│   │   ├── ItemRepo.java
+│   │   └── TagRepo.java
+│   └── service
+│       ├── ItemServiceImpl.java
+│       ├── ItemService.java
+│       ├── TagServiceImpl.java
+│       └── TagService.java
+└── web
+    ├── ItemController.java
+    └── TagController.java
+
+8 directories, 16 files
+
+```
