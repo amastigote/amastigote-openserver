@@ -27,8 +27,6 @@ public class Item {
     )
     private List<Tag> tags;
 
-    private boolean bumpToTop;
-
     public long getId() {
         return id;
     }
@@ -58,13 +56,5 @@ public class Item {
     public Item setTags(List<Tag> tags) {
         this.tags = tags;
         return this;
-    }
-
-    public boolean isBumpToTop() {
-        return bumpToTop;
-    }
-
-    public void setBumpToTop(boolean bumpToTop) {
-        this.bumpToTop = bumpToTop;
     }
 }
