@@ -102,7 +102,7 @@ public class ItemController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Response list(
-            @RequestParam int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "", name = "tag[]") String[] tags
     ) {
         Response response = new Response();
