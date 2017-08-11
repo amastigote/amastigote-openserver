@@ -8,9 +8,12 @@ A fully deployable server for amastigote open version.
 - Java 8 or higher version of JRE is required.  
 - The embedded SQLite3 database file (amastigote-open-svr.db) will automatically be generated in the first run.  
 - If you want to reset all the data, simply delete the database file.
+- Server is running at port 8080 in default.
 ```
 ➜ java -jar ama-openserver.jar
 ```
+## Development
+[REFERENCE.md](https://github.com/hwding/amastigote-openserver/blob/master/REFERENCE.md)
 ## Source Structure
 ```
 .
