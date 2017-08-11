@@ -52,9 +52,10 @@ public class ItemController {
             if (item == null)
                 response.setStat(Response.Status.ERROR);
             else {
-                itemService.saveWithTagMetas(
+                Item itemUpdated = itemService.saveWithTagMetas(
                         item.setTitle(itemRequestBody.getTitle()).setUrl(item.getUrl()),
                         itemRequestBody.getTags());
+                response.setObj(itemUpdated);
                 response.setStat(Response.Status.COMPLETE);
             }
         } catch (Exception ignored) {

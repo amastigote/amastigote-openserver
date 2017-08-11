@@ -25,9 +25,10 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public void saveWithTagMetas(Item item, String[] tagMetas) {
+    public Item saveWithTagMetas(Item item, String[] tagMetas) {
         List<Tag> tags = tagService.saveWithMetas(tagMetas);
         itemRepo.save(item.setTags(tags));
+        return itemRepo.findItemByUrl(item.getUrl());
     }
 
     @Override

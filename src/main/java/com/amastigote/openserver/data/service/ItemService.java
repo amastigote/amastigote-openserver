@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ItemService {
-    void saveWithTagMetas(Item Item, String[] tagMetas);
+    Item saveWithTagMetas(Item Item, String[] tagMetas);
 
     Item findItemByURL(String url);
 
