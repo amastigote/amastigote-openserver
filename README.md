@@ -1,5 +1,5 @@
 # amastigote-openserver
-A fully deployable server for amastigote open version.
+Deployable server for amastigote open version.
 ## Generate JAR
 ```
 ➜ mvn package
