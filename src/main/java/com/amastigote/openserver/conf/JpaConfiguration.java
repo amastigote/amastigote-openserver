@@ -25,7 +25,7 @@ public class JpaConfiguration {
 
     @Autowired
     @Bean
-    public JpaTransactionManager jpaTransactionManager(@Qualifier(value = "EmbeddeddataSource") DataSource dataSource, EntityManagerFactory entityManagerFactory) {
+    public JpaTransactionManager jpaTransactionManager(@Qualifier(value = "EmbeddedDataSource") DataSource dataSource, EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager jpaTransactionManager
                 = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
@@ -36,7 +36,7 @@ public class JpaConfiguration {
 
     @Autowired
     @Bean
-    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(@Qualifier(value = "EmbeddeddataSource") DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+    LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(@Qualifier(value = "EmbeddedDataSource") DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean
                 = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource);
