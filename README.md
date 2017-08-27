@@ -1,6 +1,10 @@
 # amastigote-openserver
-Deployable server for amastigote open version.
-## Generate JAR
+**Use amastigote to collect valuable links in a cooperative way.**
+
+This is a deployable server for amastigote open-src version.
+## Browser Extension
+Please move steps to [amastigote-browser-ext](https://github.com/amastigote/amastigote-browser-ext)
+## Generate Server JAR
 ```
 ➜ mvn package
 ```
