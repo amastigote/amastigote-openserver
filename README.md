@@ -22,23 +22,29 @@ Deployable server for amastigote open version.
 ├── data
 │   ├── model
 │   │   ├── local
+│   │   │   ├── Category.java
 │   │   │   ├── Item.java
 │   │   │   └── Tag.java
 │   │   └── remote
-│   │       ├── ItemPageObj.java
+│   │       ├── CategoryRequestBody.java
+│   │       ├── ItemPageSubResponse.java
 │   │       ├── ItemRequestBody.java
 │   │       └── Response.java
 │   ├── repository
+│   │   ├── CategoryRepo.java
 │   │   ├── ItemRepo.java
 │   │   └── TagRepo.java
 │   └── service
+│       ├── CategoryServiceImpl.java
+│       ├── CategoryService.java
 │       ├── ItemServiceImpl.java
 │       ├── ItemService.java
 │       ├── TagServiceImpl.java
 │       └── TagService.java
 └── web
+    ├── CategoryController.java
     ├── ItemController.java
     └── TagController.java
 
-8 directories, 16 files
+8 directories, 22 files
 ```
