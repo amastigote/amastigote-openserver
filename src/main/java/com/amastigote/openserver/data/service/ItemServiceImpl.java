@@ -25,8 +25,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public Item saveWithTagMetas(Item item, String[] tagMetas) {
+    public Item saveWithTagMetas(Item item, String[] tagMetas, String categoryName) {
         List<Tag> tags = tagService.saveWithMetas(tagMetas);
+        item.setCategoryName(categoryName);
         itemRepo.save(item.setTags(tags));
         return itemRepo.findItemByUrl(item.getUrl());
     }
@@ -43,12 +44,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> findItemsByTagNamesPageable(String[] names, Pageable pageable) {
-        return itemRepo.findByTags(tagService.findTagsByNames(names), pageable);
+    public Page<Item> findAllByTagsAndCategoryName(String[] names, String categoryName, Pageable pageable) {
+        return itemRepo.findAllByTagsAndCategoryName(tagService.findTagsByNames(names), categoryName, pageable);
     }
 
     @Override
-    public Page<Item> findAllPageable(Pageable pageable) {
-        return itemRepo.findAll(pageable);
+    public Page<Item> findAllByCategoryName(String categoryName, Pageable pageable) {
+        return itemRepo.findAllByCategoryName(categoryName, pageable);
     }
 }

@@ -27,6 +27,23 @@ public class Item {
     )
     private List<Tag> tags;
 
+    @ManyToOne(targetEntity = Category.class)
+    @JoinTable(
+            name = "ItemCategoryMapper",
+            joinColumns = @JoinColumn(name = "itemId"),
+            inverseJoinColumns = @JoinColumn(name = "categoryId")
+    )
+    private String categoryName;
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public Item setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+        return this;
+    }
+
     public long getId() {
         return id;
     }

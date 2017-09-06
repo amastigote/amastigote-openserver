@@ -4,6 +4,8 @@ public class ItemRequestBody {
 
     private String title;
 
+    private String categoryName;
+
     private String url;
 
     private String[] tags;
@@ -30,5 +32,13 @@ public class ItemRequestBody {
 
     public void setTags(String[] tags) {
         this.tags = tags;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

@@ -3,8 +3,7 @@ package com.amastigote.openserver.data.model.local;
 import javax.persistence.*;
 
 @Entity
-public class Tag {
-
+public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private long id;
@@ -20,7 +19,7 @@ public class Tag {
         return name;
     }
 
-    public Tag setName(String name) {
+    public Category setName(String name) {
         this.name = name;
         return this;
     }

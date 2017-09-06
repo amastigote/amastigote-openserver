@@ -5,13 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ItemService {
-    Item saveWithTagMetas(Item Item, String[] tagMetas);
+    Item saveWithTagMetas(Item Item, String[] tagMetas, String categoryName);
 
     Item findItemByURL(String url);
 
     void deleteItemByURL(String url);
 
-    Page<Item> findItemsByTagNamesPageable(String[] names, Pageable pageable);
+    Page<Item> findAllByTagsAndCategoryName(String[] names, String categoryName, Pageable pageable);
 
-    Page<Item> findAllPageable(Pageable pageable);
+    Page<Item> findAllByCategoryName(String categoryName, Pageable pageable);
 }

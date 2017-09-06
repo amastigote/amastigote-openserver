@@ -12,8 +12,6 @@ Deployable server for amastigote open version.
 ```
 ➜ java -jar ama-openserver.jar
 ```
-## Development
-[REFERENCE.md](https://github.com/hwding/amastigote-openserver/blob/master/REFERENCE.md)
 ## Source Structure
 ```
 .

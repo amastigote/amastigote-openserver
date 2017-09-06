@@ -36,6 +36,7 @@ public class TagServiceImpl implements TagService {
                     Tag thisTag = findTagByName(name);
                     return thisTag == null ? new Tag().setName(name) : thisTag;
                 })
+                .distinct()
                 .collect(Collectors.toList());
         return tagRepository.save(tags);
     }

@@ -13,8 +13,12 @@ import java.util.List;
 public interface ItemRepo extends JpaRepository<Item, Long> {
     Item findItemByUrl(String url);
 
-    @Query("SELECT DISTINCT i FROM Item i INNER JOIN i.tags t WHERE t IN (?1)")
-    Page<Item> findByTags(List<Tag> tags, Pageable pageable);
+    @Query("SELECT i FROM Item i JOIN i.tags t WHERE t IN (?1) AND i.categoryName = (?2)")
+    Page<Item> findAllByTagsAndCategoryName(List<Tag> tags, String categoryName, Pageable pageable);
+
+    Page<Item> findAllByCategoryName(String categoryName, Pageable pageable);
+
+    List<Item> findAllByCategoryName(String categoryName);
 
     @Transactional
     void deleteItemByUrl(String url);

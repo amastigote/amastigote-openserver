@@ -1,9 +1,10 @@
 package com.amastigote.openserver.web;
 
 import com.amastigote.openserver.data.model.local.Item;
-import com.amastigote.openserver.data.model.remote.ItemPageObj;
+import com.amastigote.openserver.data.model.remote.ItemPageSubResponse;
 import com.amastigote.openserver.data.model.remote.ItemRequestBody;
 import com.amastigote.openserver.data.model.remote.Response;
+import com.amastigote.openserver.data.service.CategoryService;
 import com.amastigote.openserver.data.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,24 +17,28 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/item")
 public class ItemController {
     private final ItemService itemService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, CategoryService categoryService) {
         this.itemService = itemService;
+        this.categoryService = categoryService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public Response post(@RequestBody ItemRequestBody itemRequestBody) {
         Response response = new Response();
         try {
-            if (itemService.findItemByURL(itemRequestBody.getUrl()) != null) {
+            if (itemService.findItemByURL(itemRequestBody.getUrl()) != null ||
+                    categoryService.findCategoryByName(itemRequestBody.getCategoryName()) == null) {
                 response.setStat(Response.Status.ERROR);
             } else {
                 itemService.saveWithTagMetas(
                         new Item()
                                 .setTitle(itemRequestBody.getTitle())
-                                .setUrl(itemRequestBody.getUrl())
-                        , itemRequestBody.getTags());
+                                .setUrl(itemRequestBody.getUrl()),
+                        itemRequestBody.getTags(),
+                        itemRequestBody.getCategoryName());
                 response.setStat(Response.Status.COMPLETE);
             }
         } catch (Exception ignored) {
@@ -49,12 +54,14 @@ public class ItemController {
         Response response = new Response();
         try {
             Item item = itemService.findItemByURL(itemRequestBody.getUrl());
-            if (item == null)
+            if (item == null ||
+                    categoryService.findCategoryByName(itemRequestBody.getCategoryName()) == null)
                 response.setStat(Response.Status.ERROR);
             else {
                 Item itemUpdated = itemService.saveWithTagMetas(
                         item.setTitle(itemRequestBody.getTitle()).setUrl(item.getUrl()),
-                        itemRequestBody.getTags());
+                        itemRequestBody.getTags(),
+                        itemRequestBody.getCategoryName());
                 response.setObj(itemUpdated);
                 response.setStat(Response.Status.COMPLETE);
             }
@@ -104,6 +111,7 @@ public class ItemController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Response list(
             @RequestParam(defaultValue = "0") int page,
+            @RequestParam String categoryName,
             @RequestParam(defaultValue = "", name = "tag[]") String[] tags
     ) {
         Response response = new Response();
@@ -111,13 +119,13 @@ public class ItemController {
             PageRequest pageRequest = new PageRequest(page, 20, Sort.Direction.DESC, "id");
             Page<Item> itemPage;
             if (tags.length != 0)
-                itemPage = itemService.findItemsByTagNamesPageable(tags, pageRequest);
+                itemPage = itemService.findAllByTagsAndCategoryName(tags, categoryName, pageRequest);
             else
-                itemPage = itemService.findAllPageable(pageRequest);
+                itemPage = itemService.findAllByCategoryName(categoryName, pageRequest);
             if (itemPage.hasContent()) {
                 response
                         .setStat(Response.Status.COMPLETE)
-                        .setObj(new ItemPageObj()
+                        .setObj(new ItemPageSubResponse()
                                 .setItems(itemPage.getContent())
                                 .setIsFirst(itemPage.isFirst())
                                 .setIsLast(itemPage.isLast())

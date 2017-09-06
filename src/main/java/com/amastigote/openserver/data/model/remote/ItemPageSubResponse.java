@@ -4,7 +4,7 @@ import com.amastigote.openserver.data.model.local.Item;
 
 import java.util.List;
 
-public class ItemPageObj {
+public class ItemPageSubResponse {
 
     private boolean isFirst;
 
@@ -14,11 +14,22 @@ public class ItemPageObj {
 
     private List<Item> items;
 
+    private String categoryName;
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public ItemPageSubResponse setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+        return this;
+    }
+
     public int getCurrentPage() {
         return currentPage;
     }
 
-    public ItemPageObj setCurrentPage(int currentPage) {
+    public ItemPageSubResponse setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
         return this;
     }
@@ -27,7 +38,7 @@ public class ItemPageObj {
         return isFirst;
     }
 
-    public ItemPageObj setIsFirst(boolean first) {
+    public ItemPageSubResponse setIsFirst(boolean first) {
         isFirst = first;
         return this;
     }
@@ -36,7 +47,7 @@ public class ItemPageObj {
         return isLast;
     }
 
-    public ItemPageObj setIsLast(boolean last) {
+    public ItemPageSubResponse setIsLast(boolean last) {
         isLast = last;
         return this;
     }
@@ -45,7 +56,7 @@ public class ItemPageObj {
         return items;
     }
 
-    public ItemPageObj setItems(List<Item> items) {
+    public ItemPageSubResponse setItems(List<Item> items) {
         this.items = items;
         return this;
     }
