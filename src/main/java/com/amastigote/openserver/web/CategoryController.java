@@ -28,14 +28,18 @@ public class CategoryController {
             @RequestBody CategoryRequestBody categoryRequestBody
     ) {
         Response response = new Response();
-        String name = categoryRequestBody.getName();
-        Category category = categoryService.findCategoryByName(name);
-        if (category != null)
-            response.setStat(Response.Status.ERROR);
-        else {
-            category = new Category().setName(name);
-            categoryService.save(category);
-            response.setStat(Response.Status.COMPLETE);
+        try {
+            String name = categoryRequestBody.getName();
+            Category category = categoryService.findCategoryByName(name);
+            if (category != null)
+                response.setStat(Response.Status.ERROR);
+            else {
+                category = new Category().setName(name);
+                categoryService.save(category);
+                response.setStat(Response.Status.COMPLETE);
+            }
+        } catch (Exception ignored) {
+            response.setStat(Response.Status.EXCEPTION);
         }
         return response;
     }
@@ -45,14 +49,18 @@ public class CategoryController {
             @RequestBody CategoryRequestBody categoryRequestBody
     ) {
         Response response = new Response();
-        String name = categoryRequestBody.getName();
-        String newName = categoryRequestBody.getNewName();
-        Category category = categoryService.findCategoryByName(name);
-        if (category == null || categoryService.findCategoryByName(newName) != null)
-            response.setStat(Response.Status.ERROR);
-        else {
-            categoryService.save(category.setName(newName));
-            response.setStat(Response.Status.COMPLETE);
+        try {
+            String name = categoryRequestBody.getName();
+            String newName = categoryRequestBody.getNewName();
+            Category category = categoryService.findCategoryByName(name);
+            if (category == null || categoryService.findCategoryByName(newName) != null)
+                response.setStat(Response.Status.ERROR);
+            else {
+                categoryService.save(category.setName(newName));
+                response.setStat(Response.Status.COMPLETE);
+            }
+        } catch (Exception ignored) {
+            response.setStat(Response.Status.EXCEPTION);
         }
         return response;
     }
@@ -62,13 +70,17 @@ public class CategoryController {
             @RequestBody CategoryRequestBody categoryRequestBody
     ) {
         Response response = new Response();
-        String name = categoryRequestBody.getName();
-        Category category = categoryService.findCategoryByName(name);
-        if (category == null)
-            response.setStat(Response.Status.ERROR);
-        else {
-            categoryService.deleteWithContainingItems(category);
-            response.setStat(Response.Status.COMPLETE);
+        try {
+            String name = categoryRequestBody.getName();
+            Category category = categoryService.findCategoryByName(name);
+            if (category == null)
+                response.setStat(Response.Status.ERROR);
+            else {
+                categoryService.deleteWithContainingItems(category);
+                response.setStat(Response.Status.COMPLETE);
+            }
+        } catch (Exception ignored) {
+            response.setStat(Response.Status.EXCEPTION);
         }
         return response;
     }
