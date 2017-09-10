@@ -111,7 +111,7 @@ public class ItemController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Response list(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam String categoryName,
+            @RequestParam(value = "category") String categoryName,
             @RequestParam(defaultValue = "", name = "tag[]") String[] tags
     ) {
         Response response = new Response();
@@ -119,9 +119,9 @@ public class ItemController {
             PageRequest pageRequest = new PageRequest(page, 20, Sort.Direction.DESC, "id");
             Page<Item> itemPage;
             if (tags.length != 0)
-                itemPage = itemService.findAllByTagsAndCategoryName(tags, categoryName, pageRequest);
+                itemPage = itemService.findItemsByTagsAndCategoryName(tags, categoryName, pageRequest);
             else
-                itemPage = itemService.findAllByCategoryName(categoryName, pageRequest);
+                itemPage = itemService.findItemsByCategoryName(categoryName, pageRequest);
             if (itemPage.hasContent()) {
                 response
                         .setStat(Response.Status.COMPLETE)
@@ -135,6 +135,7 @@ public class ItemController {
             }
         } catch (Exception ignored) {
             response.setStat(Response.Status.EXCEPTION);
+            ignored.printStackTrace();
         }
         return response;
     }

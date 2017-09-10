@@ -33,14 +33,14 @@ public class Item {
             joinColumns = @JoinColumn(name = "itemId"),
             inverseJoinColumns = @JoinColumn(name = "categoryId")
     )
-    private String categoryName;
+    private Category category;
 
-    public String getCategoryName() {
-        return categoryName;
+    public Category getCategory() {
+        return category;
     }
 
-    public Item setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public Item setCategory(Category category) {
+        this.category = category;
         return this;
     }
 

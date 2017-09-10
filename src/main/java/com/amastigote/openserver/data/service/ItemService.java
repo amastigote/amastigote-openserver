@@ -11,7 +11,7 @@ public interface ItemService {
 
     void deleteItemByURL(String url);
 
-    Page<Item> findAllByTagsAndCategoryName(String[] names, String categoryName, Pageable pageable);
+    Page<Item> findItemsByTagsAndCategoryName(String[] names, String categoryName, Pageable pageable);
 
-    Page<Item> findAllByCategoryName(String categoryName, Pageable pageable);
+    Page<Item> findItemsByCategoryName(String categoryName, Pageable pageable);
 }

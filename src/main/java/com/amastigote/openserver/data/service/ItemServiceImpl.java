@@ -1,5 +1,6 @@
 package com.amastigote.openserver.data.service;
 
+import com.amastigote.openserver.data.model.local.Category;
 import com.amastigote.openserver.data.model.local.Item;
 import com.amastigote.openserver.data.model.local.Tag;
 import com.amastigote.openserver.data.repository.ItemRepo;
@@ -16,20 +17,27 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepo itemRepo;
     private final TagService tagService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ItemServiceImpl(ItemRepo itemRepo, TagService tagService) {
+    public ItemServiceImpl(ItemRepo itemRepo, TagService tagService, CategoryService categoryService) {
         this.itemRepo = itemRepo;
         this.tagService = tagService;
+        this.categoryService = categoryService;
     }
 
     @Override
     @Transactional
     public Item saveWithTagMetas(Item item, String[] tagMetas, String categoryName) {
         List<Tag> tags = tagService.saveWithMetas(tagMetas);
-        item.setCategoryName(categoryName);
-        itemRepo.save(item.setTags(tags));
-        return itemRepo.findItemByUrl(item.getUrl());
+        Category category = categoryService.findCategoryByName(categoryName);
+        if (category == null)
+            return null;
+        else {
+            item.setCategory(category);
+            itemRepo.save(item.setTags(tags));
+            return itemRepo.findItemByUrl(item.getUrl());
+        }
     }
 
     @Override
@@ -44,12 +52,22 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> findAllByTagsAndCategoryName(String[] names, String categoryName, Pageable pageable) {
-        return itemRepo.findAllByTagsAndCategoryName(tagService.findTagsByNames(names), categoryName, pageable);
+    public Page<Item> findItemsByTagsAndCategoryName(String[] names, String categoryName, Pageable pageable) {
+        Category category = categoryService.findCategoryByName(categoryName);
+        if (category == null)
+            return null;
+        else {
+            return itemRepo.findItemsByTagsAndCategoryName(tagService.findTagsByNames(names), categoryName, pageable);
+        }
     }
 
     @Override
-    public Page<Item> findAllByCategoryName(String categoryName, Pageable pageable) {
-        return itemRepo.findAllByCategoryName(categoryName, pageable);
+    public Page<Item> findItemsByCategoryName(String categoryName, Pageable pageable) {
+        Category category = categoryService.findCategoryByName(categoryName);
+        if (category == null)
+            return null;
+        else {
+            return itemRepo.findItemsByCategory(category, pageable);
+        }
     }
 }

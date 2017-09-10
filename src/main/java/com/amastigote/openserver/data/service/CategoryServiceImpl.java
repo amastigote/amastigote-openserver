@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public void deleteWithContainingItems(Category category) {
-        itemRepo.delete(itemRepo.findAllByCategoryName(category.getName()));
+        itemRepo.delete(itemRepo.findItemsByCategory(category));
         categoryRepo.delete(category);
     }
 }
