@@ -3,9 +3,10 @@ package com.amastigote.openserver.data.service;
 import com.amastigote.openserver.data.model.local.Tag;
 import com.amastigote.openserver.data.repository.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,7 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = {"tagList", "tagNameList"}, allEntries = true)
     public List<Tag> saveWithMetas(String[] metas) {
         List<Tag> tags = Arrays.asList(metas)
                 .parallelStream()
@@ -42,14 +44,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public String getTagTableHash() {
-        return DigestUtils
-                .md5DigestAsHex(String.valueOf(
-                        tagRepository.findMaxId()
-                ).getBytes());
-    }
-
-    @Override
+    @Cacheable("tagList")
     public List<String> findAllTagNames() {
         return tagRepository.findAll()
                 .parallelStream()
@@ -58,6 +53,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @Cacheable("tagNameList")
     public List<Tag> findTagsByNames(String[] names) {
         return Arrays.asList(names)
                 .parallelStream()

@@ -3,7 +3,10 @@ package com.amastigote.openserver.web;
 import com.amastigote.openserver.data.model.remote.Response;
 import com.amastigote.openserver.data.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
@@ -17,18 +20,12 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Response updateTags(
-            @RequestParam(value = "serial", defaultValue = "") String tagsSerial
-    ) {
+    public Response getTags() {
         Response response = new Response();
         try {
-            String localTagsSerial = tagService.getTagTableHash();
-            if (!tagsSerial.equals(localTagsSerial)) {
-                response
-                        .setStat(Response.Status.COMPLETE)
-                        .setMsg(localTagsSerial)
-                        .setObj(tagService.findAllTagNames());
-            } else response.setStat(Response.Status.ERROR);
+            response
+                    .setStat(Response.Status.COMPLETE)
+                    .setObj(tagService.findAllTagNames());
         } catch (Exception ignored) {
             response.setStat(Response.Status.EXCEPTION);
         }

@@ -5,6 +5,8 @@ import com.amastigote.openserver.data.model.local.Item;
 import com.amastigote.openserver.data.model.local.Tag;
 import com.amastigote.openserver.data.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

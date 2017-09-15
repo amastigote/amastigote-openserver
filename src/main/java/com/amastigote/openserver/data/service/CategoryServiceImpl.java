@@ -4,6 +4,8 @@ import com.amastigote.openserver.data.model.local.Category;
 import com.amastigote.openserver.data.repository.CategoryRepo;
 import com.amastigote.openserver.data.repository.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Cacheable(cacheNames = "categoriesList")
     public List<Category> findAll() {
         return categoryRepo.findAll();
     }
@@ -32,12 +35,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "categoriesList", allEntries = true)
     public void save(Category category) {
         categoryRepo.save(category);
     }
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "categoriesList", allEntries = true)
     public void deleteWithContainingItems(Category category) {
         itemRepo.delete(itemRepo.findItemsByCategory(category));
         categoryRepo.delete(category);
