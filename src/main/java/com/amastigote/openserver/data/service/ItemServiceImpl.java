@@ -30,7 +30,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames = {"itemInCategoryWithTags", "itemInCategory"})
+    @CacheEvict(cacheNames = {"itemInCategoryWithTags", "itemInCategory"}, allEntries = true)
     public Item saveWithTagMetas(Item item, String[] tagMetas, String categoryName) {
         List<Tag> tags = tagService.saveWithMetas(tagMetas);
         Category category = categoryService.findCategoryByName(categoryName);
@@ -50,7 +50,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    @CacheEvict(cacheNames = {"itemInCategoryWithTags", "itemInCategory"})
+    @CacheEvict(cacheNames = {"itemInCategoryWithTags", "itemInCategory"}, allEntries = true)
     public void deleteItemByURL(String url) {
         itemRepo.deleteItemByUrl(url);
     }
